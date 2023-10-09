@@ -1,0 +1,42 @@
+<div class="grid">
+
+	<div class="col-12">
+		<div class="card">
+         <div class="flex justify-content">
+            <p-image  src="assets/demo/images/profile.jpg" alt="Image" width="250" [preview]="true" border-radius="50" ></p-image>
+        </div>
+			<h5>Profile</h5>
+
+			<div class="p-fluid p-formgrid grid">
+				<div class="field col-12 md:col-6">
+					<label htmlFor="firstname2">Nom</label>
+					<input pInputText id="firstname2" type="text" value="XXX" />
+				</div>
+				<div class="field col-12 md:col-6">
+					<label htmlFor="lastname2">Prenoms</label>
+					<input pInputText id="lastname2" type="text" value="XXX" />
+				</div>
+				<div class="field col-12">
+					<label htmlFor="address">Email</label>
+					<input pInputTextarea id="address" rows="4"value="XXX@gmail.com" />
+				</div>
+				<div class="field col-12 md:col-6">
+					<label htmlFor="city">Numero Tel </label>
+					<input pInputText id="city" type="text"value="11111111" />
+				</div>
+				<div class="field col-12 md:col-3">
+					<label htmlFor="state">Role</label>
+					<p-dropdown [options]="dropdownItems" optionLabel="name" [(ngModel)]="selectedState"></p-dropdown>
+				</div>
+				<div class="field col-12 md:col-3">
+					<label htmlFor="zip">Adresse</label>
+					<input pInputText id="zip" type="text"value="XXX" />
+				</div>
+            <div class="field col-12 md:col-6">
+					<label htmlFor="lastname2">Date de naissance </label>
+					<input pInputText id="lastname2" type="text"value="03/04/1998" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
