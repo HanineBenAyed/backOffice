@@ -3,6 +3,8 @@ import { Product } from 'src/app/demo/api/product';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { ProductService } from 'src/app/demo/service/product.service';
+import { Ressources } from '../models/ressource';
+import { RessourcesService } from '../services/ressourcesService/ressources.service';
 
 @Component({
   selector: 'app-ressource',
@@ -13,6 +15,8 @@ import { ProductService } from 'src/app/demo/service/product.service';
 })
 export class RessourceComponent  implements OnInit {
   productDialog: boolean = false;
+  addDialog: boolean = false;
+
 
   deleteProductDialog: boolean = false;
 
@@ -21,6 +25,11 @@ export class RessourceComponent  implements OnInit {
   products: Product[] = [];
 
   product: Product = {};
+  
+  ressource : any={};
+
+  ressources!: any;
+res : Ressources=new Ressources();
 
   selectedProducts: Product[] = [];
 
@@ -32,42 +41,79 @@ export class RessourceComponent  implements OnInit {
 
   rowsPerPageOptions = [5, 10, 20];
 
-  constructor(private productService: ProductService, private messageService: MessageService) { }
+  constructor(private productService: ProductService, private messageService: MessageService, private ressourcesService: RessourcesService) { }
 
   ngOnInit() {
       this.productService.getProducts().then(data => this.products = data);
+    this.getAllRessources();
 
-      this.cols = [
-          { field: 'product', header: 'Product' },
-          { field: 'price', header: 'Price' },
-          { field: 'category', header: 'Category' },
-          { field: 'rating', header: 'Reviews' },
-          { field: 'inventoryStatus', header: 'Status' }
-      ];
 
-      this.statuses = [
-          { label: 'INSTOCK', value: 'instock' },
-          { label: 'LOWSTOCK', value: 'lowstock' },
-          { label: 'OUTOFSTOCK', value: 'outofstock' }
-      ];
   }
+
+  getAllRessources(){
+    this.ressourcesService.getAllRessources().subscribe((ressources: Ressources[]) => {
+   
+     this.ressources=ressources;
+     console.log(this.ressources);
+   });
+    }
+
+
+
+    addRessources(){
+        this.ressourcesService.addRessources(this.res).subscribe((data: any) => {
+       
+         console.log(data);
+         this.products = [...this.products];
+         this.productDialog = false;
+         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Ressources ajoutée', life: 3000 });
+        
+       });
+
+       
+        }
+
+        updateRessource(res:Ressources){
+       
+            this.ressourcesService.updateEvent(res.idRs, res).subscribe((data: any) => {
+           
+             this.products = [...this.products];
+             this.productDialog = false;
+             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Ressources ajoutée', life: 3000 });
+            
+           });
+    
+           
+            }
 
   openNew() {
       this.product = {};
       this.submitted = false;
-      this.productDialog = true;
+      this.addDialog = true;
   }
+
+  openEdit() {
+    this.product = {};
+    this.submitted = false;
+    this.productDialog = true;
+}
+ 
 
   deleteSelectedProducts() {
       this.deleteProductsDialog = true;
   }
 
-  editProduct(product: Product) {
-      this.product = { ...product };
+  editProduct(ressources: Ressources) {
+    console.log(ressources);
+      this.ressource = { ...ressources };
       this.productDialog = true;
+      //this.openEdit();
   }
 
   deleteProduct(product: Product) {
+
+
+    
       this.deleteProductDialog = true;
       this.product = { ...product };
   }
@@ -79,10 +125,18 @@ export class RessourceComponent  implements OnInit {
       this.selectedProducts = [];
   }
 
-  confirmDelete() {
+  confirmDelete(res : Ressources) {
+
+    this.ressourcesService.deleteRess(res.idRs).subscribe((data: any) => {
+           
+        this.ressources = [...this.ressources];
+        this.productDialog = false;
+       
+      });
+
+
       this.deleteProductDialog = false;
-      this.products = this.products.filter(val => val.id !== this.product.id);
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Ressource Deleted', life: 3000 });
       this.product = {};
   }
 
@@ -92,28 +146,7 @@ export class RessourceComponent  implements OnInit {
   }
 
   saveProduct() {
-      this.submitted = true;
-
-      if (this.product.name?.trim()) {
-          if (this.product.id) {
-              // @ts-ignore
-              this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value : this.product.inventoryStatus;
-              this.products[this.findIndexById(this.product.id)] = this.product;
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-          } else {
-              this.product.id = this.createId();
-              this.product.code = this.createId();
-              this.product.image = 'product-placeholder.svg';
-              // @ts-ignore
-              this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-              this.products.push(this.product);
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-          }
-
-          this.products = [...this.products];
-          this.productDialog = false;
-          this.product = {};
-      }
+      
   }
 
   findIndexById(id: string): number {

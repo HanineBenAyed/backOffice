@@ -46,9 +46,10 @@ import { ColorPickerModule } from 'primeng/colorpicker';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { SliderModule } from 'primeng/slider';
 
+
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, UtilisateurComponent,  EvenementComponent, BlogComponent, RessourceComponent, ReclamationComponent, ProgrammeComponent, ProfileComponent
+        AppComponent, NotfoundComponent, UtilisateurComponent,  EvenementComponent, BlogComponent, RessourceComponent, ReclamationComponent, ProgrammeComponent, ProfileComponent,
     ],
     imports: [
         AppRoutingModule,
@@ -80,12 +81,14 @@ import { SliderModule } from 'primeng/slider';
         ColorPickerModule,
         InputMaskModule,
         MultiSelectModule
+        
+
 
 
 
     ],
     providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
+        { provide: LocationStrategy,  useClass: HashLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService
     ],

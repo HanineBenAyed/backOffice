@@ -1,26 +1,79 @@
 <div class="grid p-fluid">
    <div class="col-12">
        <div class="card">
-           <h5>Evenements</h5>
-           <p-carousel [value]="products" [numVisible]="3" [numScroll]="3" [circular]="false" [responsiveOptions]="carouselResponsiveOptions">
-               <ng-template let-product pTemplate="item">
+        <p-toolbar styleClass="mb-4">
+            <ng-template pTemplate="left">
+                <div class="my-2">
+                    <button pButton pRipple label="Ajouter" (click)="openNew()" icon="pi pi-plus" class="p-button-success mr-2"  ></button>
+                    </div>
+            </ng-template>
+
+           
+        </p-toolbar>
+        <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                     
+           <h5>Gestion des événements</h5>
+           <span class="block mt-2 md:mt-0 p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" placeholder="Search..."  class="w-full sm:w-auto"/>
+        </span>
+        </div>
+           <p-carousel [value]="events" [numVisible]="3" [numScroll]="3" [circular]="false" [responsiveOptions]="carouselResponsiveOptions">
+               <ng-template let-product  pTemplate="item">
+                  
                        <div class="border-round m-2 text-center p-2" style="border: 1px solid var(--surface-d)">
                            <div class="my-5">
-                               <img src="assets/demo/images/product/{{product.image}}" [alt]="product.name" class="shadow-4" width="50%"/>
+                               <img src="assets/demo/images/product/bamboo-watch.jpg" [alt]="product.name" class="shadow-4" width="50%"/>
                            </div>
                            <div>
-                               <h5 class="mb-1">{{product.name}}</h5>
-                               <h6 class="mt-0 mb-3">${{product.price}}</h6>
-                               <span [class]="'product-badge status-'+product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
+                               <h5 class="mb-1">{{product.nom}}</h5>
+                               <h6 class="mt-0 mb-3">{{product.description}}</h6>
                                <div class="my-5">
-                                   <button pButton pRipple icon="pi pi-search" class="mr-2 p-button-rounded"></button>
-                                   <button pButton pRipple icon="pi pi-star-fill" class="mr-2 p-button-rounded p-button-success"></button>
-                                   <button pButton pRipple icon="pi pi-cog" class="p-button-rounded p-button-info"></button>
-                               </div>
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
+                            </div>
                            </div>
                        </div>
                </ng-template>
            </p-carousel>
+           
        </div>
+     
+       <p-dialog [(visible)]="productDialog" [style]="{width: '500px'}" header="Ajouter un événement" [modal]="true" class="p-fluid">
+        <ng-template pTemplate="content">
+            <img [src]="'assets/demo/images/product/' + product.image" [alt]="product.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="product.image">
+            <div class="field">
+                <label for="name">Nom</label>
+                <input type="text" pInputText id="name" [(ngModel)]="product.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !product.name}"  />
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !product.name">Name is required.</small>
+            </div>  
+            <div class="field">
+                <label for="description">Lieu</label>
+                <input id="description" pInputText [(ngModel)]="product.description" required rows="3" cols="20">
+            </div>
+            <div class="field">
+                <label for="description">Date de début</label>
+                <p-calendar [(ngModel)]="product.description" id="description" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>   
+            </div>
+            <div class="field">
+                <label for="description">Date de début</label>
+                <p-calendar [(ngModel)]="product.description" id="description" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>   
+            </div>
+            <div class="field">
+                <label for="status">Type</label>
+                
+            </div>
+
+            
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+            <button pButton pRipple label="Enregistrer" icon="pi pi-check" class="p-button-text" ></button>
+               
+        </ng-template>
+    </p-dialog>
+
+
    </div>   
 </div>
