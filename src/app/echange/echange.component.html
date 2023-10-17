@@ -1,0 +1,85 @@
+<div class="col-12">
+  
+
+   <div class="card">
+    
+      <h5>Liste Des Programme d'echange</h5>
+
+      <p-table [value]="echanges" scrollDirection="both" [scrollable]="true" scrollHeight="400px" styleClass="mt-3" responsiveLayout="scroll">
+         <ng-template pTemplate="header">
+             <tr>
+                 <th style="width:200px" pFrozenColumn>Nom</th>
+                 <th style="width:200px">Pays Partenaires</th>
+                 <th style="width:200px">Date Debut</th>
+                 <th style="width:200px">Date Fin</th>
+                 <th style="width:200px">Nombre de participants</th>
+                 <th></th>
+                 <th></th>
+             </tr>
+         </ng-template>
+         <ng-template pTemplate="body" >
+             <tr  *ngFor="let echange of echanges"  >
+                 <td style="width:200px" pFrozenColumn class="font-bold">{{echange.nom}}</td>
+                 <td style="width: 200px">
+                   <!-- <img [src]="'assets/flags/' + echange.pays+ '.svg'" width="30" height="20">-->
+                    <span class="image-text ml-2">{{echange.pays}}</span>
+                 </td>
+                 <td style="width:200px">{{echange.dateDebut}}</td>
+                 <td style="width:200px">{{echange.dateFin}}</td>
+                 <td style="width:200px">{{echange.nbparticipant}}</td>
+                 <td>
+                     <div class="flex">
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="updateEchange(echange)"></button>
+                         
+                         <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteEchange(echange.id)"></button>
+                     </div>
+                 </td>
+             </tr>
+         </ng-template>
+     </p-table>
+     
+   </div>
+
+
+
+<div class="grid">
+   <div class="col-12 md:col-6">
+      <div class="card">
+         <h5>Ajout d'un Programme d'echange</h5>
+         <div class="p-fluid p-formgrid grid">
+				<div class="field col-12 md:col-6">
+					<label htmlFor="firstname2">Nom du Programme </label>
+               <input pInputText id="firstname2" type="text" name="nom" [(ngModel)]="echange.nom">
+				</div>
+				<div class="field col-12 md:col-6">
+					<label htmlFor="lastname2">Nombre de participants</label>
+               <input pInputNumber id="firstname2" type="text" name="nbparticipant" [(ngModel)]="echange.nbparticipant">
+
+				</div>
+				<div class="field col-12">
+					<label htmlFor="address">Description</label>
+					<textarea pInputTextarea id="address" name="description" [(ngModel)]="echange.description" rows="4" ></textarea>
+				</div>
+				<div class="field col-12 md:col-6">
+					<label htmlFor="city">Date debut </label>
+               <p-calendar [showIcon]="true" inputId="icon" name="dateDebut" [(ngModel)]="echange.dateDebut"></p-calendar>
+				</div>
+            <div class="field col-12 md:col-6">
+					<label htmlFor="city">Date Fin</label>
+               <p-calendar [showIcon]="true" inputId="icon" name="dateFin" [(ngModel)]="echange.dateFin"></p-calendar>
+				</div>
+            <div class="field col-12 md-6">
+               <label htmlFor="country">Pays</label>
+               <p-dropdown [options]="paysOptions" [(ngModel)]="echange.pays" name="pays" placeholder="Select a Country" selected="France"></p-dropdown>
+
+            </div>
+             
+            
+			
+            <button pButton label="Submit" (click)="onSubmit()"></button>
+         </div>
+      </div>
+   
+   </div>
+</div>
+</div>

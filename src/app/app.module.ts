@@ -16,7 +16,7 @@ import { EvenementComponent } from './evenement/evenement.component';
 import { BlogComponent } from './blog/blog.component';
 import { RessourceComponent } from './ressource/ressource.component';
 import { ReclamationComponent } from './reclamation/reclamation.component';
-import { ProgrammeComponent } from './programme/programme.component';
+import { EchangeComponent } from './echange/echange.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
@@ -48,7 +48,7 @@ import { SliderModule } from 'primeng/slider';
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, UtilisateurComponent,  EvenementComponent, BlogComponent, RessourceComponent, ReclamationComponent, ProgrammeComponent, ProfileComponent
+        AppComponent, NotfoundComponent, UtilisateurComponent,  EvenementComponent, BlogComponent, RessourceComponent, ReclamationComponent, ProfileComponent,EchangeComponent
     ],
     imports: [
         AppRoutingModule,

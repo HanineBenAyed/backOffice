@@ -7,8 +7,8 @@ import { BlogComponent } from './blog/blog.component';
 import { ReclamationComponent } from './reclamation/reclamation.component';
 import { EvenementComponent } from './evenement/evenement.component';
 import { RessourceComponent } from './ressource/ressource.component';
-import { ProgrammeComponent } from './programme/programme.component';
 import { ProfileComponent } from './profile/profile.component';
+import { EchangeComponent } from './echange/echange.component';
 
 @NgModule({
     imports: [
@@ -23,7 +23,7 @@ import { ProfileComponent } from './profile/profile.component';
                     { path: 'reclamation', component: ReclamationComponent },
                     { path: 'blog/liste', component: BlogComponent },
                     { path: 'evenement/liste', component: EvenementComponent },
-                    { path: 'programme', component: ProgrammeComponent },
+                    { path: 'programme', component: EchangeComponent },
                     { path: 'profile', component: ProfileComponent },
 
                     { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },

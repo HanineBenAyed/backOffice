@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProgrammeComponent } from './programme.component';
+import { EchangeComponent } from './echange.component';
 
-describe('ProgrammeComponent', () => {
-  let component: ProgrammeComponent;
-  let fixture: ComponentFixture<ProgrammeComponent>;
+describe('EchangeComponent', () => {
+  let component: EchangeComponent;
+  let fixture: ComponentFixture<EchangeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProgrammeComponent ]
+      declarations: [ EchangeComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ProgrammeComponent);
+    fixture = TestBed.createComponent(EchangeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
