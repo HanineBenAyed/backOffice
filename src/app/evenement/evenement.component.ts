@@ -4,7 +4,9 @@ import { ProductService } from "../demo/service/product.service";
 import { EventService } from "./event.service";
 import { PhotoService } from "../demo/service/photo.service";
 import { observable } from "rxjs";
-import { MessageService } from "primeng/api";
+
+import { Event } from "./event.model";
+import { TypeEvent } from "./typeEvent.enum";
 
 
 @Component({
@@ -16,14 +18,19 @@ export class EvenementComponent implements OnInit {
   
   products!: Product[];
   events : Event[]=[];
-
+  event !: any;
+  res : Event=new Event();
 
   images!: any[];
+
+
+
 
   product: Product = {};
   
   submitted: boolean = false;
   productDialog: boolean = false;
+  addDialog: boolean = false;
   deleteProductDialog: boolean = false;
   galleriaResponsiveOptions: any[] = [
       {
@@ -61,6 +68,7 @@ export class EvenementComponent implements OnInit {
           numScroll: 1
       }
   ];
+  eventOptions: TypeEvent[] = Object.values(TypeEvent);
 
   constructor(private productService: ProductService  , private eventService:EventService, private photoService: PhotoService) { }
 
@@ -76,7 +84,7 @@ export class EvenementComponent implements OnInit {
 
   }
   getAllEvents(){
-    this.eventService.getAllEvents().subscribe((events: Event[]) => {
+    this.eventService.getAllEvents().subscribe((events: any) => {
    
      this.events=events;
      console.log(this.events);
@@ -86,7 +94,7 @@ export class EvenementComponent implements OnInit {
     openNew() {
         this.product = {};
         this.submitted = false;
-        this.productDialog = true;
+        this.addDialog = true;
     }
     findIndexById(id: string): number {
         let index = -1;
@@ -118,7 +126,51 @@ export class EvenementComponent implements OnInit {
         this.product = { ...product };
     }
     
-  
+    editProduct(event: Event) {
+        console.log(event);
+          this.event = { ...event };
+          this.productDialog = true;
+          //this.openEdit();
+      }
+
+      updateEvent(event:Event){
+       
+        this.eventService.updateEvent(event).subscribe((data: any) => {
+       
+         this.products = [...this.products];
+         this.productDialog = false;
+        
+       });
+
+       
+        }
+
+        confirmDelete(event : Event) {
+
+            console.log(this.event)
+            this.eventService.deleteEvent(event.idEvent).subscribe((data: any) => {
+                   
+                this.events = [...this.events];
+                this.productDialog = false;
+               
+              });
+        
+        
+              
+          }
+          addEvent(){
+            this.eventService.addEvent(this.res).subscribe((data: any) => {
+           
+             console.log(data);
+             this.products = [...this.products];
+             this.addDialog = false;
+            
+           });
+    
+           
+            }
+            
+          
   
     
 }

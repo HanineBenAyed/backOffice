@@ -65,8 +65,8 @@ res : Ressources=new Ressources();
        
          console.log(data);
          this.products = [...this.products];
-         this.productDialog = false;
-         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Ressources ajoutée', life: 3000 });
+         this.addDialog = false;
+         this.messageService.add({ severity: 'success', summary: 'Succés', detail: 'Ressources ajoutée', life: 3000 });
         
        });
 
@@ -79,7 +79,7 @@ res : Ressources=new Ressources();
            
              this.products = [...this.products];
              this.productDialog = false;
-             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Ressources ajoutée', life: 3000 });
+             this.messageService.add({ severity: 'success', summary: 'Succés', detail: 'Ressources modifiée', life: 3000 });
             
            });
     
@@ -136,10 +136,12 @@ res : Ressources=new Ressources();
 
 
       this.deleteProductDialog = false;
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Ressource Deleted', life: 3000 });
+      this.messageService.add({ severity: 'error', summary: 'Deleted', detail: 'Ressource supprimée', life: 3000 });
       this.product = {};
   }
 
+
+  
   hideDialog() {
       this.productDialog = false;
       this.submitted = false;

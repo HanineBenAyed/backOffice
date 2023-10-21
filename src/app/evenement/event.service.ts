@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { Event } from "./event.model";
 
 
 @Injectable({
@@ -22,8 +23,9 @@ export class EventService {
   deleteEvent(idEvent: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/deleteEvent/${idEvent}`);
   }
+ 
 
-  updateEvent(idEvent: number, event: Event): Observable<any> {
-    return this.http.put(`${this.apiUrl}/updateEvent/${idEvent}`, event);
+  updateEvent( event: Event): Observable<any> {
+    return this.http.put(`${this.apiUrl}/updateEvent/${event.idEvent}`, event);
   }
 }

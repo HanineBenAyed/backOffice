@@ -16,7 +16,7 @@
                </ng-template>
            </p-toolbar>
 
-           <p-table #dt [value]="products" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
+           <p-table #dt [value]="ressources" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
                <ng-template pTemplate="caption">
                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                        <h5 class="m-0">Gestion Ressource</h5>
@@ -26,7 +26,7 @@
                        </span>
                    </div>
                </ng-template>
-               <ng-template pTemplate="header">
+               <ng-template pTemplate="header" >
                    <tr>
                        <th style="width: 3rem">
                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
@@ -42,10 +42,10 @@
 
                    </tr>
                </ng-template>
-               <ng-template pTemplate="body" >
+               <ng-template pTemplate="body"  >
                    <tr *ngFor="let r of ressources">
                        <td>
-                           <p-tableCheckbox [value]="product"></p-tableCheckbox>
+                           <p-tableCheckbox [value]="ressources"></p-tableCheckbox>
                        </td>
                       
                        <td style="width:14%; min-width:10rem;">
