@@ -53,6 +53,14 @@ export class AppMenuComponent implements OnInit {
                         label: 'Gestion Ressource', icon: 'pi pi-fw pi-bookmark', routerLink: ['/ressource']
                        
                     },
+                    {
+                        label: 'Programme', icon: 'pi pi-fw pi-bookmark', routerLink: ['/program']
+                       
+                    },
+                    {
+                        label: 'Payement ', icon: 'pi pi-fw pi-bookmark', routerLink: ['/payement']
+                       
+                    },
                 ]
             },
             {

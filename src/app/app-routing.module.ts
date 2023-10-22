@@ -9,6 +9,8 @@ import { EvenementComponent } from './evenement/evenement.component';
 import { RessourceComponent } from './ressource/ressource.component';
 import { ProfileComponent } from './profile/profile.component';
 import { EchangeComponent } from './echange/echange.component';
+import { ProgrammeComponent } from './programme/programme.component';
+import { PayementComponent } from './payement/payement.component';
 
 @NgModule({
     imports: [
@@ -25,6 +27,10 @@ import { EchangeComponent } from './echange/echange.component';
                     { path: 'evenement/liste', component: EvenementComponent },
                     { path: 'programme', component: EchangeComponent },
                     { path: 'profile', component: ProfileComponent },
+                    { path: 'program', component: ProgrammeComponent },
+                    { path: 'payement', component: PayementComponent },
+
+
 
                     { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
                     { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },

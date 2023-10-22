@@ -60,10 +60,12 @@ export class EchangeComponent implements OnInit {
 
 
 
+
 onSubmit() {
 
   this.echangeService.createEchange(this.echange).subscribe(
     (createdEchange) => {
+      
       console.log(createdEchange);
       // Success: Reset the form or take other actions
     },
@@ -73,6 +75,7 @@ onSubmit() {
     }
   );
 }
+
   deleteEchange(id: number): void {
     this.echangeService.deleteEchange(id).subscribe(
       () => {

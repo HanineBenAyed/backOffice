@@ -1,4 +1,3 @@
-import { P } from "@fullcalendar/core/internal-common";
 import { Pays } from "./pays.enum";
 
 export class Echange {
