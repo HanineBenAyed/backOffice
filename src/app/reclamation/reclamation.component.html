@@ -12,14 +12,21 @@
 			</tr>
 		  </ng-template>
 		  <ng-template pTemplate="body" let-reclamation let-rowIndex="rowIndex">
-			<tr [ngClass]="{ 'done-row': reclamation.status === 'Done', 'not-done-row': reclamation.status === 'Not Done' }">
+			<tr>
 			  <td style="min-width: 200px;">{{reclamation.name}}</td>
 			  <td style="min-width: 200px;">{{reclamation.details}}</td>
-			  <td style="min-width: 200px;">{{reclamation.status}}</td>
+			  <td [style.text-shadow]="reclamation.status === 'Done' ? '2px 2px 5px rgba(0, 255, 0, 0.8)' : '2px 2px 5px rgba(255, 0, 0, 0.8)'"
+			  [style.color]="reclamation.status === 'Done' ? 'green' : 'red'" 
+			  [style.font-size]="reclamation.status === 'Done' ? '16px' : '16px'"
+			  [style.font-weight]="reclamation.status === 'Done' ? 'bold' : 'bold'"
+			  [style.text-transform]="reclamation.status === 'Done' ? 'uppercase' : 'uppercase'"
+
+			  
+			  >{{reclamation.status}}</td>
 			  <td>
 			 <td>
 					<button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="showUpdateDialog(reclamation)"></button>
-					<button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="showDeleteConfirmation(reclamation)"></button>
+					<button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-circle p-button-danger" (click)="showDeleteConfirmation(reclamation)"></button>
 			 </td>
 			  
 			</tr>

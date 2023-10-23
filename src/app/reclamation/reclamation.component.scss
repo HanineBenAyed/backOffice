@@ -1,9 +1,18 @@
 .done-row {
-  background-color: green;
-  color: white; /* Change text color to make it readable */
+  //background-color: green;
+  color: black; 
+  text-decoration: solid;/* Change text color to make it readable */
 }
 
 .not-done-row {
   background-color: red;
-  color: white; /* Change text color to make it readable */
+  color: black; /* Change text color to make it readable */
+}
+
+.p-button-rounded p-button-success mr-2 {
+  background-color : green;
+}
+
+.p-button-rounded p-button-circle p-button-danger {
+  background-color: red;
 }
