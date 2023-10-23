@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpEvent } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Event } from "./event.model";
@@ -28,4 +28,11 @@ export class EventService {
   updateEvent( event: Event): Observable<any> {
     return this.http.put(`${this.apiUrl}/updateEvent/${event.idEvent}`, event);
   }
+  upload(formData: FormData): Observable<HttpEvent<string[]>> {
+
+    return this.http.post<string[]>(`${this.apiUrl}file/upload`, formData, {
+        reportProgress: true,
+        observe: 'events'
+    });
+}
 }

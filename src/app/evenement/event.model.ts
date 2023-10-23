@@ -6,4 +6,8 @@ export class Event {
     dateDeb!: Date;
     dateFin!: Date;
     type!: string;
+    nomProprietaire! : string;
+    numTel!: string;
+    prixTicket!: string;
+    image!: string;
 }

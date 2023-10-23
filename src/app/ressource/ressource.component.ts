@@ -5,6 +5,7 @@ import { Table } from 'primeng/table';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { Ressources } from '../models/ressource';
 import { RessourcesService } from '../services/ressourcesService/ressources.service';
+import { TypeRessources } from '../models/typeressource.enum';
 
 @Component({
   selector: 'app-ressource',
@@ -40,6 +41,21 @@ res : Ressources=new Ressources();
   statuses: any[] = [];
 
   rowsPerPageOptions = [5, 10, 20];
+
+  eventOptions: TypeRessources[] = Object.values(TypeRessources);
+  entrepriseOptions: any[] = [
+    { label: 'NATILAIT', value: 'NATILAIT' },
+    { label: 'POULINAGROUPHOLDING', value: 'POULINAGROUPHOLDING' },
+    { label: 'KOLSI-COSMETICS', value: 'KOLSI-COSMETICS' },
+    { label: 'MONOPRIX', value: 'MONOPRIX' },
+    { label: 'MAGASIN-GENERALE', value: 'MAGASIN-GENERALE' },
+    { label: 'MY-TEK', value: 'MY-TEK' },
+    { label: 'EL-MOURADI', value: 'EL-MOURADI' }
+  ];
+
+  listEventOptions: any[] = [
+    { label: 'CulTechConnect', value: 'CulTechConnect' }
+  ];
 
   constructor(private productService: ProductService, private messageService: MessageService, private ressourcesService: RessourcesService) { }
 

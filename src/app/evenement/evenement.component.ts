@@ -7,6 +7,9 @@ import { observable } from "rxjs";
 
 import { Event } from "./event.model";
 import { TypeEvent } from "./typeEvent.enum";
+import { Router } from "@angular/router";
+import { FileService } from "./file.service";
+import { SafeUrl } from "@angular/platform-browser";
 
 
 @Component({
@@ -15,23 +18,40 @@ import { TypeEvent } from "./typeEvent.enum";
   styleUrls: ['./evenement.component.scss']
 })
 export class EvenementComponent implements OnInit {
+
+    event: Event = new Event();
+    
   
   products!: Product[];
   events : Event[]=[];
-  event !: any;
+  
   res : Event=new Event();
 
   images!: any[];
+  selectedFiles: FileList | null = null;
+  successMessage = '';
 
 
+  entrepriseOptions: any[] = [
+    { label: 'NATILAIT', value: 'NATILAIT' },
+    { label: 'POULINAGROUPHOLDING', value: 'POULINAGROUPHOLDING' },
+    { label: 'KOLSI-COSMETICS', value: 'KOLSI-COSMETICS' },
+    { label: 'MONOPRIX', value: 'MONOPRIX' },
+    { label: 'MAGASIN-GENERALE', value: 'MAGASIN-GENERALE' },
+    { label: 'MY-TEK', value: 'MY-TEK' },
+    { label: 'EL-MOURADI', value: 'EL-MOURADI' }
+  ];
 
+  selectedEntreprise: string | undefined;
 
   product: Product = {};
-  
+  eventss: Event [] = [];
   submitted: boolean = false;
   productDialog: boolean = false;
+  detailDialog: boolean = false;
   addDialog: boolean = false;
   deleteProductDialog: boolean = false;
+  imagess: SafeUrl[] = [];
   galleriaResponsiveOptions: any[] = [
       {
           breakpoint: '1024px',
@@ -70,19 +90,24 @@ export class EvenementComponent implements OnInit {
   ];
   eventOptions: TypeEvent[] = Object.values(TypeEvent);
 
-  constructor(private productService: ProductService  , private eventService:EventService, private photoService: PhotoService) { }
+  constructor(private productService: ProductService  , private eventService:EventService,
+     private photoService: PhotoService,
+     private router: Router,
+     private fileService: FileService) { }
 
   ngOnInit() {
-      this.productService.getProductsSmall().then(products => {
-          this.products = products;
-      });
-      this.getAllEvents();
-      this.photoService.getImages().then((images: any[]) => {
-          this.images = images;
-      });
-
+    this.productService.getProductsSmall().then(products => {
+        this.products = products;
+    });
+    this.getAllEvents();
+    this.photoService.getImages().then((images: any[]) => {
+        this.images = images;
+    });
 
   }
+  arrayBufferToBase64(image: string): string {
+    return 'data:image/jpeg;base64,' + image;
+}
   getAllEvents(){
     this.eventService.getAllEvents().subscribe((events: any) => {
    
@@ -95,6 +120,11 @@ export class EvenementComponent implements OnInit {
         this.product = {};
         this.submitted = false;
         this.addDialog = true;
+    }
+    openDetail() {
+        this.product = {};
+        this.submitted = false;
+        this.detailDialog = true;
     }
     findIndexById(id: string): number {
         let index = -1;
@@ -170,7 +200,37 @@ export class EvenementComponent implements OnInit {
            
             }
             
-          
+            onSubmit(): void {
+                if (this.selectedFiles) {
+                  const formData = new FormData();
+                  for (let i = 0; i < this.selectedFiles.length; i++) {
+                    formData.append('files', this.selectedFiles[i]);
+                  }
+                  formData.append('nom', this.event.nom || '');
+                  formData.append('description', this.event.description || '');
+                  formData.append('lieu', this.event.lieu || '');
+                  formData.append('num', this.event.numTel || '');
+                  formData.append('prix', this.event.prixTicket || '');
+                  formData.append('nomprop', this.event.nomProprietaire || '');
+              
+                  this.fileService.upload(formData).subscribe(
+                    (response) => {
+                      console.log('Réponse du serveur :', response);
+                      this.successMessage = 'Événement créé avec succès!';
+                      this.router.navigate(['/evenement/liste']);
+                    },
+                    (error) => {
+                      console.error('Erreur lors de l\'appel API :', error);
+                    }
+                  );
+                }
+                
+              }
+              
+            
+            selectFile(event: any): void {
+                this.selectedFiles = event.target.files;
+            }
   
     
 }

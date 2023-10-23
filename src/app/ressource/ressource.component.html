@@ -5,8 +5,8 @@
            <p-toolbar styleClass="mb-4">
                <ng-template pTemplate="left">
                    <div class="my-2">
-                       <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-                       <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+                       <button pButton pRipple label="Ajouter" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                       <button pButton pRipple label="Supprimer" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
                    </div>
                </ng-template>
 
@@ -92,16 +92,17 @@
                    <input  id="description" pInputText [(ngModel)]="ressource.typeRessources" required rows="3" cols="20">
                </div>
                <div class="field">
-                   <label for="status">Proprietaire</label>
-                   <p-dropdown  inputId="inventoryStatus" optionValue="label" [options]="statuses" placeholder="Select">
-                       <ng-template pTemplate="selectedItem">
-                           <span *ngIf="product && product.inventoryStatus" [class]="'product-badge status-' + product.inventoryStatus.toString().toLowerCase()">{{product.inventoryStatus}}</span>
-                       </ng-template>
-                       <ng-template let-option pTemplate="item">
-                           <span [class]="'product-badge status-' + option.value">{{option.label}}</span>
-                       </ng-template>
-                   </p-dropdown>
-               </div>
+                <label for="status">Proprietaire</label>
+                <p-dropdown [options]="entrepriseOptions" [(ngModel)]="ressource.proprietaire" placeholder="Selectionner le partenaire" name="entreprise" id="entreprise"></p-dropdown>
+           
+            </div>
+
+            <div class="field">
+                <label for="status">Evénement affecté</label>
+                <p-dropdown [options]="listEventOptions" [(ngModel)]="ressource.eventNom" placeholder="Selectionner un événement" name="entreprise" id="entreprise"></p-dropdown>
+           
+            </div>
+
 
               
            </ng-template>
@@ -127,26 +128,28 @@
             </div>
             <div class="field">
                 <label for="description">Type</label>
-                <input  id="description" pInputText [(ngModel)]="res.typeRessources" required rows="3" cols="20">
+                
+                <p-dropdown [options]="eventOptions" [(ngModel)]="res.typeRessources" name="pays" id="pays"  placeholder="Selectionner le type"></p-dropdown>
             </div>
+           
             <div class="field">
                 <label for="status">Proprietaire</label>
-                <p-dropdown  inputId="inventoryStatus" optionValue="label" [options]="statuses" placeholder="Select">
-                    <ng-template pTemplate="selectedItem">
-                        <span *ngIf="product && product.inventoryStatus" [class]="'product-badge status-' + product.inventoryStatus.toString().toLowerCase()">{{product.inventoryStatus}}</span>
-                    </ng-template>
-                    <ng-template let-option pTemplate="item">
-                        <span [class]="'product-badge status-' + option.value">{{option.label}}</span>
-                    </ng-template>
-                </p-dropdown>
+                <p-dropdown [options]="entrepriseOptions" [(ngModel)]="res.proprietaire" placeholder="Selectionner le partenaire" name="entreprise" id="entreprise"></p-dropdown>
+           
+            </div>
+
+            <div class="field">
+                <label for="status">Evénement affecté</label>
+                <p-dropdown [options]="listEventOptions" [(ngModel)]="res.eventNom" placeholder="Selectionner un événement" name="entreprise" id="entreprise"></p-dropdown>
+           
             </div>
 
            
         </ng-template>
 
         <ng-template pTemplate="footer">
-            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="addRessources()"></button>
+            <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+            <button pButton pRipple label="Enregistrer" icon="pi pi-check" class="p-button-text" (click)="addRessources()"></button>
         </ng-template>
     </p-dialog>
 

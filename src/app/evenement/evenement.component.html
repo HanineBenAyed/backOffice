@@ -21,16 +21,18 @@
            <p-carousel [value]="events" [numVisible]="3" [numScroll]="3" [circular]="false" [responsiveOptions]="carouselResponsiveOptions">
                <ng-template let-product  pTemplate="item">
                   
-                       <div class="border-round m-2 text-center p-2" style="border: 1px solid var(--surface-d)">
+                       <div class="border-round m-2 text-center p-2" style="border: 1px solid var(--surface-d)" >
                            <div class="my-5">
-                               <img src="assets/demo/images/event/organisation-seminaire-incentive-840x334.webp" [alt]="product.name" class="shadow-4" width="50%"/>
+                            <img src="assets/demo/images/event/event1.jpg" [alt]="product.name" class="shadow-4" width="50%"/>
                            </div>
                            <div>
                                <h4 class="mb-1">{{product.nom}}</h4>
-                               <h6 class="mt-0 mb-3">{{product.lieu}}</h6>
+                               <h6 class="mt-0 mb-3">{{product.type}}</h6>
                                <div class="my-5">
                                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button>
-                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="confirmDelete(event)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mr-2"  (click)="confirmDelete(event)"></button>
+                                <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-blue" (click)="openDetail()"></button>
+                            
                             </div>
                            </div>
                        </div>
@@ -44,25 +46,43 @@
             <img [src]="'assets/demo/images/product/' + product.image" [alt]="product.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="product.image">
             <div class="field">
             <br><br>
-                <label for="name">Nom bez</label>
+                <label for="name">Titre</label>
                 <input type="text" pInputText id="name" [(ngModel)]="event.nom" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !product.name}"  />
                 <small class="ng-dirty ng-invalid" *ngIf="submitted && !product.name">Name is required.</small>
             </div>  
             <div class="field">
-                <label for="description">Lieu</label>
+                <label for="description">Adresse</label>
                 <input id="description" pInputText [(ngModel)]="event.lieu" required rows="3" cols="20">
             </div>
+
+            <div class="field">
+                <label for="description">Prix du ticket</label>
+                <input id="description" pInputText [(ngModel)]="event.prixTicket" required rows="3" cols="20">
+            </div>
+            <div class="field">
+                <label for="description">Partenaire</label>
+                <input id="description" pInputText [(ngModel)]="event.nomProprietaire" required rows="3" cols="20">
+            </div>
+
+            
+
             <div class="field">
                 <label for="status">Type</label>
                  <p-dropdown [options]="eventOptions" [(ngModel)]="res.type" name="pays" id="pays" ></p-dropdown>
                 
              </div>
+
+             <div class="field">
+                <label for="description">Prix du ticket</label>
+                <input type="number" id="description"  pInputText [(ngModel)]="res.prixTicket" required rows="3" cols="20">
+            </div>
+
             <div class="field">
                 <label for="description">Date de début</label>
                 <p-calendar [(ngModel)]="event.dateDeb"  id="description" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>   
             </div>
             <div class="field">
-                <label for="description">Date de début</label>
+                <label for="description">Date de fin</label>
                 <p-calendar [(ngModel)]="event.dateFin" id="description" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>   
             </div>
             
@@ -77,35 +97,100 @@
         </ng-template>
     </p-dialog>
 
+    <p-dialog [(visible)]="detailDialog" [style]="{width: '500px'}" header="Détails de l'événement" [modal]="true" class="p-fluid">
+        <ng-template pTemplate="content">
+            <img [src]="'assets/demo/images/product/' + product.image" [alt]="product.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="product.image">
+            <div class="field">
+            <br><br>
+                <label for="name">Titre</label>
+                
+                <input  type="text" pInputText id="name" [(ngModel)]="event.nom" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !product.name}" />
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !product.name">Name is required.</small>
+            </div>  
+            <div class="field">
+                <label for="description">Adresse</label>
+                <input id="description" pInputText [(ngModel)]="event.lieu" required rows="3" cols="20">
+            </div>
 
+            <div class="field">
+                <label for="description">Prix du ticket</label>
+            </div>
+
+            
+
+            <div class="field">
+                <label for="status">Type</label>
+                 <p-dropdown [options]="eventOptions" [(ngModel)]="res.type" name="pays" id="pays" ></p-dropdown>
+                
+             </div>
+            <div class="field">
+                <label for="description">Date de début</label>
+                <p-calendar [(ngModel)]="event.dateDeb"  id="description" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>   
+            </div>
+            <div class="field">
+                <label for="description">Date de fin</label>
+                <p-calendar [(ngModel)]="event.dateFin" id="description" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>   
+            </div>
+            
+
+            
+        </ng-template>
+
+        
+    </p-dialog>
 
     <p-dialog [(visible)]="addDialog" [style]="{width: '500px'}" header="Ajouter un événement" [modal]="true" class="p-fluid">
         <ng-template pTemplate="content">
             <img [src]="'assets/demo/images/product/' + product.image" [alt]="product.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="product.image">
             <div class="field">
             <br><br>
-                <label for="name">Nom</label>
-                <input type="text" pInputText id="name" [(ngModel)]="res.nom" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !product.name}"  />
-                <small class="ng-dirty ng-invalid" *ngIf="submitted && !product.name">Name is required.</small>
+                <label for="name">Titre</label>
+                <input type="text" pInputText id="name" placeholder="Saisir le titre de l'événement" [(ngModel)]="event.nom" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !res.nom}"  />
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !res.nom">Name is required.</small>
             </div>  
             <div class="field">
-                <label for="description">Lieu</label>
-                <input id="description" pInputText [(ngModel)]="res.lieu" required rows="3" cols="20">
+                <label for="description">Adresse</label>
+                <input id="description" placeholder="Saisir une adresse exacte" pInputText [(ngModel)]="res.lieu" required rows="3" cols="20">
             </div>
+            <div class="field">
+                <label for="description">Prix du ticket</label>
+                <input type="number" id="description" placeholder="Saisir le prix du ticket" pInputText [(ngModel)]="res.prixTicket" required rows="3" cols="20">
+            </div>
+            
             
             <div class="field">
                 <label for="status">Type</label>
-                 <p-dropdown [options]="eventOptions" [(ngModel)]="res.type" name="pays" id="pays"  placeholder="Selectionner le type" selected="France"></p-dropdown>
+                 <p-dropdown [options]="eventOptions" [(ngModel)]="res.type" name="pays" id="pays"  placeholder="Selectionner le type"></p-dropdown>
                 
              </div>
+             <div class="field">
+                <label for="company">Partenaire</label>
+                <p-dropdown [options]="entrepriseOptions" [(ngModel)]="res.nomProprietaire" placeholder="Selectionner le partenaire" name="entreprise" id="entreprise"></p-dropdown>
+            </div>
             <div class="field">
                 <label for="description">Date de début</label>
-                <p-calendar [(ngModel)]="res.dateDeb"  id="description" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>   
+                <p-calendar [(ngModel)]="res.dateDeb" placeholder="Saisir la date de début" id="description" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>   
             </div>
             <div class="field">
                 <label for="description">Date de fin</label>
-                <p-calendar [(ngModel)]="res.dateFin" id="description" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>   
+                <p-calendar [(ngModel)]="res.dateFin" id="description" placeholder="Saisir la date de fin" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>   
             </div>
+            <div class="field">
+                <label for="description">Contact</label>
+                <input id="description" type="number" placeholder="Saisir un numéro de téléphone disponible" pInputText [(ngModel)]="res.numTel" required pattern="^[0-9]{8}">
+            </div>
+
+            <div >
+                <label for="fileUpload"> <i ></i></label>
+                <input type="file" (change)="selectFile($event)" name="file"  id="fileUpload"  />
+            </div>
+
+            <div class="field">
+                <label for="description">Description</label>
+                <textarea id="description" placeholder="Décrire brièvement l'objectif de l'événement"pInputText [(ngModel)]="res.description" required rows="3" cols="20"></textarea>
+            </div>
+
+            
             
 
             
@@ -113,7 +198,7 @@
 
         <ng-template pTemplate="footer">
             <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-            <button pButton pRipple label="Enregistrer" icon="pi pi-check" class="p-button-text" (click)="addEvent()"></button>
+            <button pButton pRipple label="Enregistrer" icon="pi pi-check" class="p-button-text" (click)="onSubmit()"></button>
                
         </ng-template>
     </p-dialog>

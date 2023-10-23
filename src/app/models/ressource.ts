@@ -3,5 +3,6 @@ export class Ressources {
     nomRs!: string;
     descriptionRs!: string;
     typeRessources!: string;
-    
+    proprietaire!: string;
+    eventNom!: string;
 }

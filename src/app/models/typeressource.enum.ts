@@ -1,0 +1,5 @@
+export enum TypeRessources {
+    MATERIELLE = 'MATERIELLE',
+    MONNAITAIRE = 'MONNAITAIRE',
+    IMMOBILIER = 'IMMOBILIER'
+  }
