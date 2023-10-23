@@ -42,7 +42,7 @@ export class AppMenuComponent implements OnInit {
                       
                     },
                     {
-                        label: 'Gestion Programme d Echange',icon: 'pi pi-fw pi-id-card', routerLink: ['/programme'],
+                        label: 'Gestion Programme d Echange',icon: 'pi pi-fw pi-id-card', routerLink: ['/program'],
                         
                     },
                     {
@@ -53,12 +53,9 @@ export class AppMenuComponent implements OnInit {
                         label: 'Gestion Ressource', icon: 'pi pi-fw pi-bookmark', routerLink: ['/ressource']
                        
                     },
+                   
                     {
-                        label: 'Programme', icon: 'pi pi-fw pi-bookmark', routerLink: ['/program']
-                       
-                    },
-                    {
-                        label: 'Payement ', icon: 'pi pi-fw pi-bookmark', routerLink: ['/payement']
+                        label: 'Gestion de Payement ', icon: 'pi pi-fw pi-bookmark', routerLink: ['/payement']
                        
                     },
                 ]

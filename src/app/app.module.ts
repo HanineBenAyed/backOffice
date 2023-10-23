@@ -47,10 +47,19 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { SliderModule } from 'primeng/slider';
 import { ProgrammeComponent } from './programme/programme.component';
 import { PayementComponent } from './payement/payement.component';
+import { DetailsPayementComponent } from './details-payement/details-payement.component';
+import { DividerModule } from 'primeng/divider';
+import { MenuModule } from 'primeng/menu';
+import { PanelModule } from 'primeng/panel';
+import { SplitterModule } from 'primeng/splitter';
+import { AccordionModule } from 'primeng/accordion';
+import { FieldsetModule } from 'primeng/fieldset';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, UtilisateurComponent,  EvenementComponent, BlogComponent, RessourceComponent, ReclamationComponent, ProfileComponent,EchangeComponent, ProgrammeComponent, PayementComponent
+        AppComponent, NotfoundComponent, UtilisateurComponent,  EvenementComponent, BlogComponent, RessourceComponent, ReclamationComponent, ProfileComponent,EchangeComponent, ProgrammeComponent, PayementComponent, DetailsPayementComponent
     ],
     imports: [
         AppRoutingModule,
@@ -81,8 +90,19 @@ import { PayementComponent } from './payement/payement.component';
         SliderModule,
         ColorPickerModule,
         InputMaskModule,
-        MultiSelectModule
-
+        MultiSelectModule,
+        ToolbarModule,
+		ButtonModule,
+		RippleModule,
+		SplitButtonModule,
+		AccordionModule,
+		TabViewModule,
+		FieldsetModule,
+		MenuModule,
+		InputTextModule,
+		DividerModule,
+		SplitterModule,
+		PanelModule
 
 
     ],

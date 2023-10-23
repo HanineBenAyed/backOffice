@@ -6,6 +6,7 @@ import { Table } from 'primeng/table';
 import { Echange } from './echange.model';
 import { Pays } from './pays.enum';
 import { EchangeService } from './echange.service';
+import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 
 @Component({
   templateUrl: './programme.component.html',
@@ -39,9 +40,14 @@ export class ProgrammeComponent implements OnInit {
   echanges: Echange[] = [];
   echange: Echange = new Echange();
   paysOptions: Pays[] = Object.values(Pays);
+  searchTerm: string = '';
 
 
-  constructor(private productService: ProductService, private messageService: MessageService,private echangeService :EchangeService) { }
+  constructor(private productService: ProductService, private messageService: MessageService,private echangeService :EchangeService) {
+    this.echangeService.getEchanges().subscribe((echanges) => {
+      this.echanges = echanges;
+    });
+   }
 
   ngOnInit() {
     this.echangeService.getEchanges().subscribe(echanges => {
@@ -118,16 +124,31 @@ export class ProgrammeComponent implements OnInit {
    
     this.echangeService.createEchange(this.echange).subscribe(
       (createdEchange) => {
-        
-        console.log(createdEchange);
-        // Success: Reset the form or take other actions
+        // Affichez un message de succès
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Succès',
+          detail: 'Échange créé avec succès'
+        });
+        // Réinitialisez le formulaire ou effectuez d'autres actions si nécessaire
       },
       (error) => {
-        console.log(error);
-        // Handle the error
+        // Affichez un message d'erreur
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erreur',
+          detail: 'Échec de la création de l\'échange veuillez verifier les champs date , Date debut doit depasser la date d\'aujourd\'hui et la date fin depasse la date debut '
+        });
+        console.log('Erreur lors de la création de l\'échange:', error);
+        // Gérez l'erreur ici
       }
-
     );
+    
+    
+    
+    
+    
+    
    }
       
   
@@ -155,6 +176,12 @@ export class ProgrammeComponent implements OnInit {
 
   onGlobalFilter(table: Table, event: Event) {
       table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
+  onSearchInputChange() {
+    // Filtrer la liste d'échanges en fonction du terme de recherche
+    this.echanges = this.echanges.filter((echange) =>
+      echange.nom.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
   
   editProduct(res:Echange){

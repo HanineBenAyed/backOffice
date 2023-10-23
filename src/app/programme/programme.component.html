@@ -16,18 +16,22 @@
                </ng-template>
            </p-toolbar>
 
-           <p-table #dt [value]="echanges" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','pays','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
+           <p-table #dt [value]="echanges" [columns]="cols" responsiveLayout="scroll" [rows]="6" [globalFilterFields]="['name','pays','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[6,12,18]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
                <ng-template pTemplate="caption">
                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                        <h5 class="m-0">Gestion Programme d'echange</h5>
                        <span class="block mt-2 md:mt-0 p-input-icon-left">
                            <i class="pi pi-search"></i>
-                           <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                           <input  pInputText
+                           type="text"
+                           (input)="onSearchInputChange()"
+                           placeholder="Rechercher..."
+                           [(ngModel)]="searchTerm" class="w-full sm:w-auto"/>
                        </span>
                    </div>
                </ng-template>
                <ng-template pTemplate="header">
-                   <tr>
+                   <tr >
                        <th style="width: 3rem">
                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                        </th>
@@ -44,7 +48,7 @@
                    </tr>
                </ng-template>
                <ng-template pTemplate="body" let-echange>
-                   <tr>
+                   <tr >
                        <td>
                            <p-tableCheckbox [value]="echange"></p-tableCheckbox>
                        </td>

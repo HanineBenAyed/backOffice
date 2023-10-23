@@ -11,6 +11,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { EchangeComponent } from './echange/echange.component';
 import { ProgrammeComponent } from './programme/programme.component';
 import { PayementComponent } from './payement/payement.component';
+import { DetailsPayementComponent } from './details-payement/details-payement.component';
 
 @NgModule({
     imports: [
@@ -29,6 +30,8 @@ import { PayementComponent } from './payement/payement.component';
                     { path: 'profile', component: ProfileComponent },
                     { path: 'program', component: ProgrammeComponent },
                     { path: 'payement', component: PayementComponent },
+                    { path: 'detailspayement/:id', component: DetailsPayementComponent },
+
 
 
 

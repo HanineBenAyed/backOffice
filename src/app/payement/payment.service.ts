@@ -17,15 +17,21 @@ export class PaymentService {
   }
 
 
-  validatePayment(id: number) {
+  validatePayment(id: number) : Observable<any>{
     return this.http.get(`${this.baseUrl}/validatePayment/${id}`);
   }
 
-  declinePayment(id: number) {
+  declinePayment(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/declinePayment/${id}`);
   }
 
   test() {
     return this.http.get(`${this.baseUrl}/test`);
+  }
+  getPaymentById(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/getPaymentByid/${id}`);
+  }
+  updatePayment(payment: any,id: number): Observable<any> {
+    return this.http.put(`${this.baseUrl}/updatePayment`, payment);
   }
 }

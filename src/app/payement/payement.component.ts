@@ -15,7 +15,8 @@ export class PayementComponent  implements OnInit {
     productDialog: boolean = false;
   
     deleteProductDialog: boolean = false;
-  
+    editDialog:boolean =false;
+
     deleteProductsDialog: boolean = false;
   
     products: Product[] = [];
@@ -29,9 +30,13 @@ export class PayementComponent  implements OnInit {
     cols: any[] = [];
   
     statuses: any[] = [];
+    selectedEchange!: Payment;
+
   
     rowsPerPageOptions = [5, 10, 20];
     payments: Payment[] = [];
+    payment: Payment = new Payment();
+
 
   
     constructor(private productService: ProductService, private messageService: MessageService,private paymentService: PaymentService) { }
@@ -51,16 +56,34 @@ export class PayementComponent  implements OnInit {
   }
   
 
-  validatePayment(id: number) {
-    this.paymentService.validatePayment(id).subscribe((response) => {
-      // Handle the response here
-    });
+  validatePayment(id_payment: number, event: Event): void {
+    console.log("Payment ID: " + id_payment); // Log the ID to verify its value
+    this.paymentService.validatePayment(id_payment).subscribe(
+      response => {
+        // Handle the response
+      },
+      error => {
+        console.error('Error accepting payment', error);
+      }
+    );
   }
 
-  declinePayment(id: number) {
-    this.paymentService.declinePayment(id).subscribe((response) => {
-      // Handle the response here
-    });
+  declinePayment(id_payment: number) {
+    if (id_payment) {
+      this.paymentService.declinePayment(id_payment).subscribe(
+          response => {
+              // Mettez à jour les données ou effectuez d'autres actions en cas de succès
+              console.log('Paiement refusé avec succès');
+          },
+          error => {
+              // Gérez les erreurs, par exemple, affichez un message d'erreur
+              console.error('Erreur lors du refus du paiement', error);
+          }
+      );
+  } else {
+      console.error('ID du paiement non défini');
+  }
+
   }
   
   openNew() {
@@ -68,14 +91,25 @@ export class PayementComponent  implements OnInit {
     this.submitted = false;
     this.productDialog = true;
 }
+openEdit(payment: Payment) {
+  // Make a copy of the selected Echange to prevent modifying the original data
+  this.selectedEchange = { ...payment };
+  this.editDialog = true;
+}
 
 deleteSelectedProducts() {
     this.deleteProductsDialog = true;
 }
 
-editProduct(product: Product) {
-    this.product = { ...product };
-    this.productDialog = true;
+editProduct(payement: Payment) {
+  this.paymentService.updatePayment(payement,payement.id_payment).subscribe((data: any) => {
+    this.payments = [...this.payments];
+    this.editDialog = true;          
+    
+    this.messageService.add({ severity: 'success', summary: 'Succés', detail: 'payement modifiée', life: 3000 });
+   
+  });
+  
 }
 
 deleteProduct(product: Product) {
