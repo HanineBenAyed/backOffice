@@ -77,7 +77,7 @@
                            <div class="flex">
                             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="openEdit(echange)"></button>
                             <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="confirmDeleteSelected(echange.id)"></button>
-                            <button pButton pRipple icon="pi pi-user" class="p-button-rounded p-button-info" (click)="openParticipant(echange.id)"></button>
+                            <button pButton pRipple icon="pi pi-user" class="p-button-rounded p-button-info" ></button>
                            </div>
                        </td>
                    </tr>
@@ -161,44 +161,7 @@
             <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="editProduct(selectedEchange)"></button>
         </ng-template>
     </p-dialog>
-    <p-dialog [(visible)]="openParticipant" [style]="{width: '450px'}" header="Details Programme dechange" [modal]="true" class="p-fluid">
-        <ng-template pTemplate="content">
-            <div class="field">
-                <label for="name">Nom</label>
-                <input type="text" pInputText id="nom" [(ngModel)]="selectedEchange.nom" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !selectedEchange.nom}"  />
-            </div>
-            <div class="field">
-                <label for="nbparticipant">Nombre de participants</label>
-                <input pInputText [(ngModel)]="selectedEchange.nbparticipant" required rows="3" cols="20">
-            </div>
-            <div class="field">
-                <label for="description">Description</label>
-                <input  id="description" pInputText [(ngModel)]="selectedEchange.description" required rows="3" cols="20">
-            </div>
-            
-            <div class="field">
-               <label for="price">Date de Debut</label>
-               <p-calendar [showIcon]="true" inputId="icon" name="dateDebut" [(ngModel)]="selectedEchange.dateDebut"></p-calendar>
-            </div>
-
-     
-
-            <div class="field">
-                    <label for="price">Date de fin</label>
-                    <p-calendar [showIcon]="true" inputId="icon" name="dateFin" [(ngModel)]="selectedEchange.dateFin"></p-calendar>
-             </div>
-            <div class="field">
-                <label for="status">pays</label>
-                 <p-dropdown [options]="paysOptions" [(ngModel)]="selectedEchange.pays" name="pays" id="pays"  placeholder="Select a Country" selected="France"></p-dropdown>
-                
-             </div>              
-        </ng-template>
-
-        <ng-template pTemplate="footer">
-            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="editProduct(selectedEchange)"></button>
-        </ng-template>
-    </p-dialog>
+ 
 
        <p-dialog [(visible)]="deleteProductDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
            <div class="flex align-items-center justify-content-center">

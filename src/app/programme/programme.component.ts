@@ -80,11 +80,7 @@ export class ProgrammeComponent implements OnInit {
       this.submitted = false;
       this.productDialog = true;
   }
-  openParticipant(id:number) {
-    this.product = {};
-    this.submitted = false;
-    this.participantDialog = true;
-}
+
   openEdit(echange: Echange) {
     // Make a copy of the selected Echange to prevent modifying the original data
     this.selectedEchange = { ...echange };
