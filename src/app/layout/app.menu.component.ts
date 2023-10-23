@@ -50,6 +50,9 @@ export class AppMenuComponent implements OnInit {
                         
                     },
                     {
+                        label: 'Gestion Quiz', icon: 'pi pi-fw pi-bookmark', routerLink: ['/quiz'],
+                    },
+                    {
                         label: 'Gestion Ressource', icon: 'pi pi-fw pi-bookmark', routerLink: ['/ressource']
                        
                     },

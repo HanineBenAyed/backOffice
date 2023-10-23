@@ -1,0 +1,45 @@
+<div class="grid">
+		
+	<div class="col-12">
+		<div class="card">
+			<h5>Liste des quiz</h5>
+			<p-table rowGroupMode="subheader" groupRowsBy="representative.name" sortField="representative.name" sortMode="single" responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px">
+				<ng-template pTemplate="header">
+					<tr>
+						<th>Questions</th>
+						<th>Choix 1</th>
+						<th>Choix 2</th>
+						<th>Choix 3</th>
+						<th>Choix 4</th>
+                  <th></th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-customer let-rowIndex="rowIndex">
+				
+					<tr>
+						<td style="min-width: 200px;">
+							<span class="font-bold ml-2">{{customer.representative.name}}</span>						</td>
+						<td style="min-width: 200px;">
+							<span class="image-text" style="margin-left: .5em">{{customer.country.name}}</span>
+						</td>
+						<td style="min-width: 200px;">
+							{{customer.company}}
+						</td>
+						<td style="min-width: 200px;">
+							<span [class]="'customer-badge status-' + customer.status">{{customer.status}}</span>
+						</td>
+						<td style="min-width: 200px;">
+							{{customer.date}}
+						</td>
+                  <td>
+                     <div class="flex">
+                         <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" ></button>
+                         <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" ></button>
+                     </div>
+                 </td>
+					</tr>
+				</ng-template>
+			</p-table>
+		</div>
+	</div>
+</div>

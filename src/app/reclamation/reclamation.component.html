@@ -1,47 +1,51 @@
 <div class="grid">
-	
-	
 	<div class="col-12">
-		<div class="card">
-			<h5>Liste des reclamations</h5>
-			<p-table [value]="customers3" rowGroupMode="subheader" groupRowsBy="representative.name" sortField="representative.name" sortMode="single" (onSort)="onSort()" responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px">
-				<ng-template pTemplate="header">
-					<tr>
-						<th>Utilisateur</th>
-						<th>Sujet</th>
-						<th>Desvription</th>
-						<th>Statut</th>
-						<th>Date</th>
-                  <th></th>
-					</tr>
-				</ng-template>
-				<ng-template pTemplate="body" let-customer let-rowIndex="rowIndex">
-				
-					<tr>
-						<td style="min-width: 200px;">
-							<img [alt]="customer.representative.name" src="assets/demo/images/avatar/{{customer.representative.image}}" width="32" style="vertical-align: middle" />
-							<span class="font-bold ml-2">{{customer.representative.name}}</span>						</td>
-						<td style="min-width: 200px;">
-							<span class="image-text" style="margin-left: .5em">{{customer.country.name}}</span>
-						</td>
-						<td style="min-width: 200px;">
-							{{customer.company}}
-						</td>
-						<td style="min-width: 200px;">
-							<span [class]="'customer-badge status-' + customer.status">{{customer.status}}</span>
-						</td>
-						<td style="min-width: 200px;">
-							{{customer.date}}
-						</td>
-                  <td>
-                     <div class="flex">
-                         <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" ></button>
-                         <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" ></button>
-                     </div>
-                 </td>
-					</tr>
-				</ng-template>
-			</p-table>
-		</div>
+	  <div class="card">
+		<h5>Liste des reclamations</h5>
+		<p-table [value]="reclamationRequests || []" rowGroupMode="subheader" groupRowsBy="representative.name" sortField="representative.name" sortMode="single" (onSort)="onSort()" responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px">
+		  <ng-template pTemplate="header">
+			<tr>
+			  <th>Name</th>
+			  <th>Description</th>
+			  <th>Statut</th>
+			  <th>Actions</th>
+			</tr>
+		  </ng-template>
+		  <ng-template pTemplate="body" let-reclamation let-rowIndex="rowIndex">
+			<tr [ngClass]="{ 'done-row': reclamation.status === 'Done', 'not-done-row': reclamation.status === 'Not Done' }">
+			  <td style="min-width: 200px;">{{reclamation.name}}</td>
+			  <td style="min-width: 200px;">{{reclamation.details}}</td>
+			  <td style="min-width: 200px;">{{reclamation.status}}</td>
+			  <td>
+			 <td>
+					<button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="showUpdateDialog(reclamation)"></button>
+					<button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="showDeleteConfirmation(reclamation)"></button>
+			 </td>
+			  
+			</tr>
+		  </ng-template>
+		</p-table>
+
+
+<app-dialog 
+  [reclamation]="selectedReclamation"
+  [display]="displayUpdateDialog"
+  (update)="updateReclamation($event)"
+  (close)="closeUpdateDialog()"
+  class="app-dialog"
+> 
+</app-dialog>
+
+
+<app-delete-dialog 
+  [display]="displayDeleteConfirmation" 
+  (confirm)="deleteReclamation()"
+  (cancel)="cancelDelete()"
+  class="app-delete-dialog"
+>
+</app-delete-dialog>
+
+
+	  </div>
 	</div>
-</div>
+  </div>

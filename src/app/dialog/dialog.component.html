@@ -1,0 +1,18 @@
+<p-dialog header="Update Reclamation" [(visible)]="display" class="ui-dialog-content ">
+    <div class="text">
+      <p>name : </p>
+      <input [(ngModel)]="reclamation.name" />
+      <p>details : </p>
+      <input [(ngModel)]="reclamation.details" />
+      <p>status : </p>
+      <div class="p-field">
+        <label for="status">Status</label>
+        <p-dropdown id="status" [options]="statusOptions" [(ngModel)]="reclamation.status"></p-dropdown>
+
+      </div></div>
+    <div>
+      <button class="btn" pButton label="Save" (click)="onSave()"></button>
+      <button class="btn" pButton label="Cancel" (click)="onCancel()"></button>
+    </div>
+</p-dialog>
+  

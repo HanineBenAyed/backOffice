@@ -1,5 +1,5 @@
 import { RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { NotfoundComponent } from './demo/components/notfound/notfound.component';
 import { AppLayoutComponent } from "./layout/app.layout.component";
 import { UtilisateurComponent } from './utilisateur/utilisateur.component';
@@ -9,7 +9,7 @@ import { EvenementComponent } from './evenement/evenement.component';
 import { RessourceComponent } from './ressource/ressource.component';
 import { ProgrammeComponent } from './programme/programme.component';
 import { ProfileComponent } from './profile/profile.component';
-
+import { QuizComponent } from './quiz/quiz.component';
 @NgModule({
     imports: [
         RouterModule.forRoot([
@@ -20,6 +20,7 @@ import { ProfileComponent } from './profile/profile.component';
                     { path: 'utilisateur', component: UtilisateurComponent },
                     { path: 'ressource', component: RessourceComponent },
 
+                    { path:'quiz', component : QuizComponent}, 
                     { path: 'reclamation', component: ReclamationComponent },
                     { path: 'blog/liste', component: BlogComponent },
                     { path: 'evenement/liste', component: EvenementComponent },

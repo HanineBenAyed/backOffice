@@ -45,10 +45,13 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { SliderModule } from 'primeng/slider';
+import { QuizComponent } from './quiz/quiz.component';
+import { DialogComponent } from './dialog/dialog.component';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, UtilisateurComponent,  EvenementComponent, BlogComponent, RessourceComponent, ReclamationComponent, ProgrammeComponent, ProfileComponent
+        AppComponent, NotfoundComponent, UtilisateurComponent,  EvenementComponent, BlogComponent, RessourceComponent, ReclamationComponent, ProgrammeComponent, ProfileComponent, QuizComponent, DialogComponent, DeleteDialogComponent
     ],
     imports: [
         AppRoutingModule,

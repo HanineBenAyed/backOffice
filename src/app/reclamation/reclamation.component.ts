@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Customer, Representative } from 'src/app/demo/api/customer';
-import { CustomerService } from 'src/app/demo/service/customer.service';
-import { Product } from 'src/app/demo/api/product';
-import { ProductService } from 'src/app/demo/service/product.service';
+import { ChangeDetectorRef,Component, OnInit, ViewChild, ElementRef,Renderer2 } from '@angular/core';
 import { Table } from 'primeng/table';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { ReclamationService } from '../services/reclamation.service';
+import { Reclamation } from '../models/Reclamation';
+import {Status } from '../models/status.enum'
+import { Observable } from 'rxjs';
 
 interface expandedRows {
   [key: string]: boolean;
@@ -14,73 +13,39 @@ interface expandedRows {
   templateUrl: './reclamation.component.html',
   styleUrls: ['./reclamation.component.scss']
 })
+
 export class ReclamationComponent implements OnInit {
 
-    customers1: Customer[] = [];
-
-    customers2: Customer[] = [];
-
-    customers3: Customer[] = [];
-
-    selectedCustomers1: Customer[] = [];
-
-    selectedCustomer: Customer = {};
-
-    representatives: Representative[] = [];
-
-    statuses: any[] = [];
-
-    products: Product[] = [];
-
     rowGroupMetadata: any;
-
     expandedRows: expandedRows = {};
-
-    activityValues: number[] = [0, 100];
-
+   
     isExpanded: boolean = false;
 
-    idFrozen: boolean = false;
-
-    loading: boolean = true;
+    reclamationRequests$: Observable<Reclamation[]>;
+    reclamationRequests: Reclamation[] = [];
+    reclamation: any = {}; 
+    selectedReclamation: Reclamation = new Reclamation();
+    displayUpdateDialog = false;
+    displayDeleteConfirmation: boolean = false;
 
     @ViewChild('filter') filter!: ElementRef;
 
-    constructor(private customerService: CustomerService, private productService: ProductService) { }
+    constructor(private cd: ChangeDetectorRef,private reclamationService: ReclamationService,private renderer: Renderer2, private el: ElementRef) {
+        
+        this.reclamationRequests$ = new Observable<Reclamation[]>();
+
+    }
 
     ngOnInit() {
-        this.customerService.getCustomersLarge().then(customers => {
-            this.customers1 = customers;
-            this.loading = false;
 
-            // @ts-ignore
-            this.customers1.forEach(customer => customer.date = new Date(customer.date));
+        this.loadReclamationRequests();
+    }
+  
+    loadReclamationRequests() {
+        this.reclamationService.getReclamations().subscribe((requests) => {
+          this.reclamationRequests = requests;
+          this.cd.detectChanges();
         });
-        this.customerService.getCustomersMedium().then(customers => this.customers2 = customers);
-        this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
-        this.productService.getProductsWithOrdersSmall().then(data => this.products = data);
-
-        this.representatives = [
-            { name: 'Amy Elsner', image: 'amyelsner.png' },
-            { name: 'Anna Fali', image: 'annafali.png' },
-            { name: 'Asiya Javayant', image: 'asiyajavayant.png' },
-            { name: 'Bernardo Dominic', image: 'bernardodominic.png' },
-            { name: 'Elwin Sharvill', image: 'elwinsharvill.png' },
-            { name: 'Ioni Bowcher', image: 'ionibowcher.png' },
-            { name: 'Ivan Magalhaes', image: 'ivanmagalhaes.png' },
-            { name: 'Onyama Limba', image: 'onyamalimba.png' },
-            { name: 'Stephen Shaw', image: 'stephenshaw.png' },
-            { name: 'XuXue Feng', image: 'xuxuefeng.png' }
-        ];
-
-        this.statuses = [
-            { label: 'Unqualified', value: 'unqualified' },
-            { label: 'Qualified', value: 'qualified' },
-            { label: 'New', value: 'new' },
-            { label: 'Negotiation', value: 'negotiation' },
-            { label: 'Renewal', value: 'renewal' },
-            { label: 'Proposal', value: 'proposal' }
-        ];
     }
 
     onSort() {
@@ -88,42 +53,37 @@ export class ReclamationComponent implements OnInit {
     }
 
     updateRowGroupMetaData() {
-        this.rowGroupMetadata = {};
+        this.rowGroupMetadata = {}; }
+    
 
-        if (this.customers3) {
-            for (let i = 0; i < this.customers3.length; i++) {
-                const rowData = this.customers3[i];
-                const representativeName = rowData?.representative?.name || '';
+    updateReclamation(reclamation: Reclamation) {
+            this.reclamationService.updateReclamation(reclamation).subscribe((updatedReclamation) => {
+              console.log('Reclamation updated:', updatedReclamation);
+            
+              this.displayUpdateDialog = false;
+            });
+            this.loadReclamationRequests();
+          }
+        
+    showUpdateDialog(reclamation: Reclamation) {
+            this.selectedReclamation = { ...reclamation }; 
+            this.displayUpdateDialog = true;
+            this.loadReclamationRequests();
+          }
+        
+    closeUpdateDialog() {
+            this.displayUpdateDialog = false;
 
-                if (i === 0) {
-                    this.rowGroupMetadata[representativeName] = { index: 0, size: 1 };
-                }
-                else {
-                    const previousRowData = this.customers3[i - 1];
-                    const previousRowGroup = previousRowData?.representative?.name;
-                    if (representativeName === previousRowGroup) {
-                        this.rowGroupMetadata[representativeName].size++;
-                    }
-                    else {
-                        this.rowGroupMetadata[representativeName] = { index: i, size: 1 };
-                    }
-                }
-            }
-        }
-    }
+          }
 
     expandAll() {
         if (!this.isExpanded) {
-            this.products.forEach(product => product && product.name ? this.expandedRows[product.name] = true : '');
+          
 
         } else {
             this.expandedRows = {};
         }
         this.isExpanded = !this.isExpanded;
-    }
-
-    formatCurrency(value: number) {
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     }
 
     onGlobalFilter(table: Table, event: Event) {
@@ -134,5 +94,25 @@ export class ReclamationComponent implements OnInit {
         table.clear();
         this.filter.nativeElement.value = '';
     }
+
+
+
+    showDeleteConfirmation(reclamation: Reclamation) {
+        this.selectedReclamation = reclamation;
+        this.displayDeleteConfirmation = true;
+      }
+      
+    deleteReclamation() {
+        this.reclamationService.deleteReclamation(this.selectedReclamation.idReclamation).subscribe(() => {
+          this.displayDeleteConfirmation = false;
+          this.loadReclamationRequests();
+        });
+        
+      }
+      
+    cancelDelete() {
+        this.displayDeleteConfirmation = false;
+      }
+      
 
 }
