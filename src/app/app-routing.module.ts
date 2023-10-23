@@ -12,6 +12,7 @@ import { EchangeComponent } from './echange/echange.component';
 import { ProgrammeComponent } from './programme/programme.component';
 import { PayementComponent } from './payement/payement.component';
 import { DetailsPayementComponent } from './details-payement/details-payement.component';
+import { ParticipantComponent } from './participant/participant.component';
 
 @NgModule({
     imports: [
@@ -22,7 +23,6 @@ import { DetailsPayementComponent } from './details-payement/details-payement.co
                     { path: '', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     { path: 'utilisateur', component: UtilisateurComponent },
                     { path: 'ressource', component: RessourceComponent },
-
                     { path: 'reclamation', component: ReclamationComponent },
                     { path: 'blog/liste', component: BlogComponent },
                     { path: 'evenement/liste', component: EvenementComponent },
@@ -31,6 +31,7 @@ import { DetailsPayementComponent } from './details-payement/details-payement.co
                     { path: 'program', component: ProgrammeComponent },
                     { path: 'payement', component: PayementComponent },
                     { path: 'detailspayement/:id', component: DetailsPayementComponent },
+                    { path: 'participant/:id', component: ParticipantComponent },
 
 
 

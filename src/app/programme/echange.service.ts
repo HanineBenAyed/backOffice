@@ -33,4 +33,7 @@ export class EchangeService {
   participate(id: number): Observable<Echange> {
     return this.http.post<Echange>(`${this.apiBaseUrl}/echanges/participate/${id}`, {});
   }
+  getParticipantsByEchangeId(echangeId: number) {
+    return this.http.get(`${this.apiBaseUrl}/echanges/${echangeId}/participants`);
+  }
 }

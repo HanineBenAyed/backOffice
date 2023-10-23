@@ -56,10 +56,11 @@ import { AccordionModule } from 'primeng/accordion';
 import { FieldsetModule } from 'primeng/fieldset';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { TabViewModule } from 'primeng/tabview';
+import { ParticipantComponent } from './participant/participant.component';
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, UtilisateurComponent,  EvenementComponent, BlogComponent, RessourceComponent, ReclamationComponent, ProfileComponent,EchangeComponent, ProgrammeComponent, PayementComponent, DetailsPayementComponent
+        AppComponent, NotfoundComponent, UtilisateurComponent,  EvenementComponent, BlogComponent, RessourceComponent, ReclamationComponent, ProfileComponent,EchangeComponent, ProgrammeComponent, PayementComponent, DetailsPayementComponent, ParticipantComponent
     ],
     imports: [
         AppRoutingModule,

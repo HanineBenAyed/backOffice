@@ -38,12 +38,14 @@
                        <th pSortableColumn="price">Pays <p-sortIcon field="price"></p-sortIcon></th>
 
                        <th ></th>
+                       <th></th>
+                       <th ></th>
                        <th ></th>
                        <th></th>
                    </tr>
                </ng-template>
                <ng-template pTemplate="body" let-payment>
-                   <tr >
+                   <tr>
                        <td>
                            <p-tableCheckbox [value]="payment"></p-tableCheckbox>
                        </td>
@@ -66,20 +68,25 @@
                         {{payment.country}}
                     </td>
                     <td>
-                        <button pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-success mr-2" (click)="validatePayment(payment.id_payment, $event)">Accepter</button>
-                        <button pButton pRipple icon="pi pi-times" class="p-button-rounded p-button-warning" (click)="declinePayment(payment.id_payment)">Refuser</button>
+                        <button pButton pRipple label="Accepter" class="p-button-rounded p-button-success" (click)="validatePayment(payment.id_payment, $event)"></button>
                     </td>
-                       <td></td>
-                       <td></td>
+                       <td>
+                         <button pButton pRipple label="Refuser" class="p-button-rounded p-button-danger" (click)="declinePayment(payment.id_payment)"></button>
+                       </td>
+                       <td>
+                        <div class="flex">
+                       <button pButton pRipple  class="p-button-rounded p-button-success p-button-outlined" [routerLink]="['/detailspayement', payment.id_payment]">View Details</button>
+                        </div>
+                       </td>
 
 
                       
                        <td>
                            <div class="flex">
-                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['/detailspayement', payment.id_payment]">View Details</button>
-                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(payment)"></button>
+                            <button pButton pRipple icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined" (click)="deleteProduct(payment)"></button>
                            </div>
                        </td>
+                     
                    </tr>
                </ng-template>
            </p-table>

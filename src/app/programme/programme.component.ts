@@ -17,6 +17,8 @@ export class ProgrammeComponent implements OnInit {
   
   productDialog: boolean = false;
   editDialog:boolean =false;
+  participantDialog:boolean =false;
+
 
   deleteProductDialog: boolean = false;
 
@@ -41,6 +43,8 @@ export class ProgrammeComponent implements OnInit {
   echange: Echange = new Echange();
   paysOptions: Pays[] = Object.values(Pays);
   searchTerm: string = '';
+  echangeId!: number; // L'ID de l'échange que vous souhaitez afficher
+  participants!: any[];
 
 
   constructor(private productService: ProductService, private messageService: MessageService,private echangeService :EchangeService) {
@@ -76,6 +80,11 @@ export class ProgrammeComponent implements OnInit {
       this.submitted = false;
       this.productDialog = true;
   }
+  openParticipant(id:number) {
+    this.product = {};
+    this.submitted = false;
+    this.participantDialog = true;
+}
   openEdit(echange: Echange) {
     // Make a copy of the selected Echange to prevent modifying the original data
     this.selectedEchange = { ...echange };
@@ -150,6 +159,12 @@ export class ProgrammeComponent implements OnInit {
     
     
    }
+   loadParticipants() {
+    this.echangeService.getParticipantsByEchangeId(this.echangeId)
+      .subscribe((data: any) => {
+        this.participants = data;
+      });
+  }
       
   
 
